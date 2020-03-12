@@ -16,7 +16,7 @@
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item" id="cartItem">
+               <div class="cart-item" id="cartItem1">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
@@ -35,7 +35,7 @@
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="cartItem2">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$ <span id="subtotal">1,278</span></h5>
-                        <h5>$0</h5>
-                        <h5>$<span id="total">1,278</span></h5>
+                        <h5>$ <span id="subtotal">1278.00</span></h5>
+                         <input type="number" name="tax" id="taxCal" placeholder="%" oninput="taxCalculate()">
+                        <h5>$<span id="total">1278.00</span></h5>
                      </div>
                   </div>
                </div>
@@ -80,47 +80,73 @@
 
    <script>
 
-      //item add event handler
-      const itemBtn = document.getElementById("addItem");
+// document.getElementById("cartItem1").addEventListener("",function(){
+//   console.log("hello!")
+//    cardUpdate()
+// })
+//function cardUpdate (){
+ //item add(+) event handler
+ const itemBtn = document.getElementById("addItem");
+      const itemPrice = document.getElementById("itemPrice").innerText;
+      const itemNumber = parseFloat(itemPrice);
+      const subtotalText = document.getElementById("subtotal").innerText;
+      const subtotalNumber = parseFloat(subtotalText);
+      const total = document.getElementById("total").innerText;
+      const totalNumber = parseFloat(total);
       itemBtn.addEventListener("click", function(){
+        // debugger
       // for item increasse 
       const currentItem = document.getElementById("currentItem").value;
       const currentNumber = parseFloat(currentItem);
       const totalItem = currentNumber + 1 ;
       document.getElementById("currentItem").value = totalItem;
       //for itemPrice increase
-      const itemPrice = document.getElementById("itemPrice").innerText;
-      const itemNumber = parseFloat(itemPrice);
-      document.getElementById("itemPrice").innerText = totalItem * itemNumber;
-      //for subtotal increase
-      const subtotalText = document.getElementById("subtotal").innerText;
-      const subtotalNumber = parseFloat(subtotalText);
-      document.getElementById("subtotal").innerText = subtotalNumber + itemPrice;
-      //for total increase
-      const total = document.getElementById("total").innerText;
-      const totalNumber = parseFloat(total);
-      document.getElementById("total").innerText = total + totalNumber;
-      console.log(totalNumber);
+      //const itemPrice = document.getElementById("itemPrice").innerText;
+      //const itemNumber = parseFloat(itemPrice);
+      const itemTotalPrice = totalItem * itemPrice
+      document.getElementById("itemPrice").innerText = itemTotalPrice;
+
+      // //for subtotal increase
+      const subTotalPrice = subtotalNumber + (itemTotalPrice-itemPrice) ;
+      document.getElementById("subtotal").innerText = subTotalPrice;
 
       })
 
+      function taxCalculate (){     
+         const  perValue =document.getElementById("taxCal").value;
+         const subtotal =document.getElementById("subtotal").innerText;
+         const totalPrice = (parseFloat(subtotal) /100)*perValue;
+         document.getElementById("total").innerHTML = parseFloat(subtotal) + totalPrice
+      }
+     
       //item Minus event handler
       const itemMinusBtn = document.getElementById("minusItem");
       itemMinusBtn.addEventListener("click", function(){
+        // debugger
          const currentItem = document.getElementById("currentItem").value;
          const currentNumber = parseFloat(currentItem);
          //console.log(currentItem);
         const totalItem = currentNumber - 1 ;
         document.getElementById("currentItem").value = totalItem;
-        // console.log(totalItem);
+
+      const itemTotalPrice = totalItem * itemPrice
+      document.getElementById("itemPrice").innerText = itemTotalPrice;
+
+      const subTotalPrice = subtotalNumber + (itemTotalPrice-itemPrice);
+      document.getElementById("subtotal").innerText = subTotalPrice;
+       console.log(subTotalPrice);
 
       })
-
+     
       // Remove item event handler
       const removeCartBtn = document.getElementById("removeCart");
       removeCartBtn.addEventListener('click', function(){
          document.getElementById("cartItem").remove();
       })
+//}
+     
+
+     
    </script>
 </body>
 
